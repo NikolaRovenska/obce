@@ -1,3 +1,10 @@
+"""
+obec.py: obec
+author: Nikola Rovenská
+email: rovenskanikola45@gmail.com
+discord: trashy_monster 
+"""
+
 import requests
 import re
 import csv
