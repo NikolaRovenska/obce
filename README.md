@@ -1,31 +1,49 @@
+# Scraper Volebních Výsledků z Obcí
 
-# Jednoduchý Scraper Volebních Výsledků
-
-Tento Python skript slouží k **jednoduchému získávání (scrapování) volebních výsledků** z webových stránek volby.cz, jejich zpracování a následnému uložení do souboru CSV. Umožňuje rychle extrahovat data o voličích, vydaných obálkách, platných hlasech a výsledky jednotlivých politických stran pro obce v zadaném kraji.
+Tento Python skript slouží k **automatickému získávání volebních výsledků** z webu [volby.cz](https://www.volby.cz) v rámci **jednotlivých obcí**. Prochází HTML strukturu stránek, extrahuje základní statistiky a výsledky jednotlivých politických stran, a vše ukládá do CSV formátu pro další zpracování.
 
 ---
 
 ## Funkce
 
-* **Stahování HTML:** Bezpečné stahování HTML obsahu z libovolné URL pomocí knihovny `requests`.
-* **Extrakce dat o obcích:** Automatické nalezení názvů, kódů a URL pro detailní výsledky jednotlivých obcí v rámci zadaného kraje.
-* **Extrakce základních statistik:** Získání počtu voličů, vydaných obálek a platných hlasů pro každou obec.
-* **Extrakce výsledků stran:** Sebrání hlasů pro jednotlivé politické strany z detailních stránek obcí.
-* **Ukládání do CSV:** Export všech získaných dat do přehledného CSV souboru, kde každý řádek reprezentuje jednu obec a sloupce obsahují základní statistiky a hlasy pro jednotlivé strany.
-* **Robustní zpracování chyb:** Základní ošetření chyb při stahování stránek a parsování dat.
+*  **Stahování HTML stránek** pomocí `requests`
+*  **Parsers obcí** – extrahuje kódy, názvy a URL odkazující na detailní výsledky
+*  **Získání statistiky obce** – počet voličů, vydané obálky, platné hlasy
+*  **Získání hlasů pro strany** – z každé obce stáhne výsledky hlasování
+*  **Výstup do CSV** – každá obec na jednom řádku, sloupce obsahují statistiky a hlasy stran
+*  **Ošetření běžných chyb** – jako nedostupnost stránky nebo chybějící data
 
 ---
 
-## Jak to spustit?
+## Ukázka struktury výstupu
 
-Skript se spouští z příkazové řádky a vyžaduje dva argumenty: **URL hlavní stránky kraje** na volby.cz a **název výstupního CSV souboru**.
+| Kód obce | Název obce | Voliči | Obálky | Platné hlasy | Strana A | Strana B | ... |
+| -------- | ---------- | ------ | ------ | ------------ | -------- | -------- | --- |
+| 123456   | Obecnice   | 654    | 623    | 619          | 300      | 150      | ... |
 
-### Požadavky
+---
+
+## Požadavky
 
 * Python 3.x
-* Knihovna `requests` (nainstalujete ji pomocí `pip install requests`)
+* Knihovny: `requests`, `csv`, `re`, `bs4`
+  (nainstaluješ např. přes `pip install requests beautifulsoup4`)
 
-### Použití
+---
+
+## Použití
+
+Skript se spouští z příkazové řádky. Potřebuješ zadat:
+
+1. **URL hlavní stránky kraje** (např. výsledky voleb v daném kraji)
+2. **Název výstupního souboru CSV**
+
+### Spuštění:
 
 ```bash
-python nazev_skriptu.py <URL_HLAVNI_STRANKY_KRAJE> <NAZEV_CSV_SOUBORU>
+python scraper.py https://www.volby.cz/pls/ps2021/ps3?xkraj=14 výstup.csv
+```
+
+Po spuštění skript stáhne data pro všechny obce z dané stránky a uloží je do přehledného CSV.
+
+
